@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -12,13 +11,13 @@ dotenv.config()
 export default defineConfig(({ mode }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
     return {
+        base: '/',
         plugins: [
             react({
                 babel: {
                     plugins: ['babel-plugin-macros'],
                 },
             }),
-
             dynamicImport(),
             VitePWA({
                 registerType: 'autoUpdate',
@@ -28,8 +27,8 @@ export default defineConfig(({ mode }) => {
                     'mask-icon.svg',
                 ],
                 manifest: {
-                    name: 'pnx',
-                    short_name: 'pnx',
+                    name: 'communiche',
+                    short_name: 'communiche',
                     theme_color: '#ffffff',
                     icons: [
                         {
@@ -64,7 +63,7 @@ export default defineConfig(({ mode }) => {
                                     `${process.env.REACT_APP_API_BASE_URL}`
                                 )
                             },
-                            handler: 'CacheFirst' as const,
+                            handler: 'CacheFirst',
                             options: {
                                 cacheName: 'api-cache',
                                 cacheableResponse: {
@@ -87,6 +86,16 @@ export default defineConfig(({ mode }) => {
         },
         define: {
             'process.env': process.env,
+        },
+        preview: {
+            port: 5173,
+        },
+        server: {
+            cors: {
+                origin: '*', // Allow all origins
+                methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific HTTP methods
+                allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+            },
         },
     }
 })
