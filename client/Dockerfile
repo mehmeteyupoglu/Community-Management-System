@@ -12,11 +12,8 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-# Build the application for production
-RUN npm run build
-
-# Expose the port that the application will run on
+# Expose the port that Vite's development server will run on
 EXPOSE 5173
 
-# Run the Vite preview server
-CMD ["npm", "run", "preview"]
+# Run the Vite development server
+CMD ["npm", "run", "start"]
