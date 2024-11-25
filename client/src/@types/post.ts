@@ -13,6 +13,7 @@ export type PostData = {
     user: UserResponseType
     likes?: number
     is_liked?: boolean
+    tags?: { id: number; name: string }[]
 }
 
 export type _Field = {
@@ -26,6 +27,7 @@ export type CommentResponseType = {
     post: number
     user: UserResponseType
     content: string
+    community: CommunityType
     created_at: string
     updated_at: string
 }

@@ -1,7 +1,7 @@
 // src/post/components/DisplayPost.tsx
 import { CommentResponseType, PostData, _Field } from '@/@types/post'
 import { ActionLink } from '@/components/shared'
-import { Button, Card, Input } from '@/components/ui'
+import { Button, Card, Input, Tag } from '@/components/ui'
 import {
     apiDeletePost,
     apiGetComments,
@@ -90,7 +90,9 @@ export default function DisplayPost({
                 bodyClass="cursor-pointer"
             >
                 <div className="header justify-between">
-                    <h3>{content[0]?.field_value || 'No Title'}</h3>
+                    {content && content.length > 0 && (
+                        <h3>{content[0]?.field_value || 'No Title'}</h3>
+                    )}
                     {showCommunityName && (
                         <div className="flex items-center">
                             <p className="mr-3">{community.name}</p>
@@ -110,10 +112,15 @@ export default function DisplayPost({
                                 if (item.field_type === 'geolocation') {
                                     let coordinates
                                     try {
-                                        coordinates = JSON.parse(item.field_value)
+                                        coordinates = JSON.parse(
+                                            item.field_value
+                                        )
                                     } catch (error) {
-                                        console.error("Error parsing Coordinates: ", error)
-                                        coordinates = [40.7371776, 31.5850752]; //this will be the default values (Istanbul)
+                                        console.error(
+                                            'Error parsing Coordinates: ',
+                                            error
+                                        )
+                                        coordinates = [40.7371776, 31.5850752] //this will be the default values (Istanbul)
                                     }
 
                                     return (
@@ -140,6 +147,20 @@ export default function DisplayPost({
                         </div>
                     )}
                 </div>
+
+                {/* Tags Section */}
+                {post.tags && post.tags.length > 0 && (
+                    <div className="tags-section mt-3">
+                        <strong>Tags:</strong>
+                        <span className="ml-2">
+                            {post.tags.map((tag, index) => (
+                                <span key={index}>
+                                    <Tag className="mr-1">{tag}</Tag>
+                                </span>
+                            ))}
+                        </span>
+                    </div>
+                )}
 
                 <div className="footer flex justify-between">
                     <p>
@@ -198,6 +219,20 @@ export default function DisplayPost({
                                 />
                             )}
                             <p>{`(${likes})`}</p>
+                        </div>
+                        <div>
+                            <Button
+                                size="xs"
+                                variant="solid"
+                                className="mx-2 bg-red-500 text-white"
+                                onClick={() =>
+                                    navigate(
+                                        `/community/${community.id}/create-report/?post_id=${id}`
+                                    )
+                                }
+                            >
+                                Report
+                            </Button>
                         </div>
                     </div>
                 </div>
