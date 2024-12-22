@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure--x&acod-6vwu^!_s1t_(9*x!79=abpd+)ypt5@wg9)5v6aqcz@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["34.247.178.72", "my-backend-container", "127.0.0.1", '13.49.73.218', "www.kodigate.com", "kodigate.com", "localhost"]
+ALLOWED_HOSTS = ["communiche.site", "54.171.199.115", "my-backend-container", "127.0.0.1", '13.49.73.218', "www.kodigate.com", "kodigate.com", "localhost"]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -85,15 +86,26 @@ WSGI_APPLICATION = 'communiche.wsgi.application'
 load_dotenv()
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': os.getenv('DB_NAME'),
+       'USER': os.getenv('DB_USER'),
+       'PASSWORD': os.getenv('DB_PASSWORD'),
+       'HOST': os.getenv('DB_HOST'),
+       'PORT': os.getenv('DB_PORT'),
+   }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'communiche_db',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
@@ -135,4 +147,6 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+MEDIA_URL = '/img/'
+MEDIA_ROOT = BASE_DIR / 'img'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -44,6 +44,24 @@ export type BadgeType = {
     description?: string
     tier?: string
     status: boolean
+    icon?: string 
+    is_owned?: boolean
+    earned_at?: string
+    background_color?: string;
+    criteria?: { [key: string]: any };
+}
+
+export type CommunityBadgeType = {
+    id: number
+    name: string
+    description?: string
+    tier?: string
+    status: boolean
+    icon?: string 
+    is_owned?: boolean
+    earned_at?: string
+    background_color?: string;
+    criteria?: { [key: string]: any };
 }
 
 export type NotificationType = {
@@ -78,4 +96,13 @@ export type Post = {
 export type Community = {
     id: number
     name: string
+}
+
+export type FollowerType = {
+    id: number
+    user_name: string
+    follower: string
+    following: string
+    follower_id: number
+    following_id: number
 }
